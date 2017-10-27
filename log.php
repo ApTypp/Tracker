@@ -10,6 +10,14 @@ if (is_array($data)) {
 
 switch ($_GET['mode']){
 
+    case 'delete':
+        $id = $_GET['id'];
+        unset($data[$id]);
+        $json = json_encode($data);
+        $file = fopen('data.json','w');
+        fwrite($file,$json);
+    break;
+
     case 'remove':
         $id = $_GET['id'];
         $data[$id]['status']= 0;
@@ -96,7 +104,7 @@ break;
                     <td><?php if (empty($task['date_ended'])){
                             echo round((time() - $task['date_created'])/60) . ' minutes';
                         } else {echo round(($task["date_ended"] - $task['date_created'])/60) . ' minutes';} ?></td>
-                    <td class="btn-col"></td>
+                    <td class="btn-col"><button data-id="<?php echo $task['id'] ?>" class="btn btn-danger btn-delete">Delete</button></td>
                     <td class="btn-col"><button data-id="<?php echo $task['id'] ?>" class="btn btn-info btn-restore">Restore</button></td>
                 </tr>
 

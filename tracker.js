@@ -74,11 +74,11 @@ $(document).ready(function () {
         });
     });
 
-    $('#log').on('click', '.btn-restore', function () {
+    $('#log').on('click', '.btn-delete', function () {
         var id = $(this).data('id');
 
         $.ajax({
-            url: 'log.php?mode=status&id='+id,
+            url: 'log.php?mode=delete&id='+id,
             success: function(){
                 build('restore');
             }
