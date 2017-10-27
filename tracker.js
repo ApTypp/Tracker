@@ -85,4 +85,15 @@ $(document).ready(function () {
         });
     });
 
+    $('#log').on('click', '.btn-restore', function () {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: 'log.php?mode=status&id='+id,
+            success: function(){
+                build('restore');
+            }
+        });
+    });
+
 });
