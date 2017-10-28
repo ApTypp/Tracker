@@ -96,4 +96,15 @@ $(document).ready(function () {
         });
     });
 
+    $('#log').on('click', '.btn-important', function () {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: 'log.php?mode=imp&id='+id,
+            success: function(){
+                build('build');
+            }
+        });
+    });
+
 });

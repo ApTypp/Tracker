@@ -10,6 +10,18 @@ if (is_array($data)) {
 
 switch ($_GET['mode']){
 
+    case 'imp':
+        $id = $_GET['id'];
+        if ($data[$id]['imp'] == 0){
+            $data[$id]['imp'] = 1;
+        } else {
+            $data[$id]['imp'] = 0;
+        }
+        $json = json_encode($data);
+        $file = fopen('data.json','w');
+        fwrite($file,$json);
+    break;
+
     case 'delete':
         $id = $_GET['id'];
         unset($data[$id]);
@@ -51,6 +63,7 @@ switch ($_GET['mode']){
         $data[$time]['date_ended'] = '';
         $data[$time]['status'] = 1;
         $data[$time]['name'] = $_GET['task'];
+        $data[$time]['imp'] = 0;
         $json = json_encode($data);
         $file = fopen('data.json','w');
         fwrite($file,$json);
@@ -73,7 +86,7 @@ switch ($_GET['mode']){
         if ($task['status'] == 1){
         ?>
     <tr>
-        <td><?php echo $task['name'] ?></td>
+        <td <?php if ($task['imp'] == 1) { echo 'style="background-color: #FB8168"';} ?> data-id="<?php echo $task['id'] ?>" id="name"><?php echo $task['name'] ?></td>
         <td><?php echo date('M j Y h:i A',$task['date_created']) ?></td>
         <td><?php if (!empty($task['date_ended'])){
                 echo date('M j Y h:i A',$task['date_ended']);
@@ -81,6 +94,7 @@ switch ($_GET['mode']){
         <td><?php if (empty($task['date_ended'])){
             echo round((time() - $task['date_created'])/60) . ' minutes';
             } else {echo round(($task["date_ended"] - $task['date_created'])/60) . ' minutes';} ?></td>
+        <td class="btn-col"><button data-id="<?php echo $task['id'] ?>" class="btn btn-secondary btn-important">Mark as <?php if ($task['imp'] == 1){echo 'Not';} ?> Importnat</button></td>
         <td class="btn-col"><button data-id="<?php echo $task['id'] ?>" class="btn btn-primary btn-stop" <?php if (!empty($task['date_ended'])){echo 'disabled';} ?>>Stop</button></td>
         <td class="btn-col"><button data-id="<?php echo $task['id'] ?>" class="btn btn-secondary btn-remove">Hide</button></td>
     </tr>

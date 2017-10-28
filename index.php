@@ -54,7 +54,7 @@
             <th>Start</th>
             <th>End</th>
             <th>Time</th>
-            <th colspan="2">Controls</th>
+            <th colspan="3">Controls</th>
         </tr>
         </thead>
 
